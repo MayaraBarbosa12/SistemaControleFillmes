@@ -36,23 +36,68 @@ public class Administrador {
 
     public static void cadastrarAtor(ArrayList<Ator> atores) {
         Scanner teclado = new Scanner(System.in);
-        System.out.print("Nome do ator: ");
-        String nome = teclado.nextLine();
-        System.out.print("Data de nascimento (dd/MM/yyyy): ");
-        String dataNascimento = teclado.nextLine();
-        atores.add(new Ator(nome, dataNascimento));
-        System.out.println("\nAtor cadastrado com sucesso: " + nome + "- (" + dataNascimento + ")");
+        List<String> cadastrar = new ArrayList<>();
+        System.out.println("Quantos atores quer cadastar?");
+        int quantidade = teclado.nextInt();
+        teclado.nextLine();
+        for(int i = 0; i<quantidade; i++){
+            System.out.print("Digite o nome do " + (i+1) + "° ator: ");
+            String nome = teclado.nextLine();
+            boolean valid = false;
+            String input = "";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            while (!valid){
+                System.out.print("Data de nascimento (dd/MM/yyyy): ");
+                input = teclado.nextLine();
+                if (input.matches("\\d{2}/\\d{2}/\\d{4}")){
+                    try{
+                        LocalDate date = LocalDate.parse(input,formatter);
+                        valid = true;
+                        atores.add(new Ator(nome, input));
+                    } catch (DateTimeParseException e){
+                        System.out.println("Erro: Data inválida. Por favor, digite uma data válida.");
+                    }
+                } else{
+                    System.out.println("Erro: Formato invalido. Por favor, use o formato DD/MM/AA.");
+                }
+            }
+            System.out.println("\nAtor cadastrado com sucesso: " + nome + "- (" + input + ")");
+        }
         App.menuAdministrador();
+
     }
 
     public static void cadastrarDiretor(ArrayList<Diretor> diretores) {
         Scanner teclado = new Scanner(System.in);
-        System.out.print("Nome do diretor: ");
-        String nome = teclado.nextLine();
-        System.out.print("Data de nascimento (dd/MM/yyyy): ");
-        String dataNascimento = teclado.nextLine();
-        diretores.add(new Diretor(nome, dataNascimento));
-        System.out.println("\nDiretor cadastrado com sucesso: " + nome + " - (" + dataNascimento + ")");
+        List<String> cadastrar = new ArrayList<>();
+        System.out.println("Quantos diretores quer cadastar?");
+        int quantidade = teclado.nextInt();
+        teclado.nextLine();
+        for(int i = 0; i<quantidade; i++){
+            System.out.print("Digite o nome do " + (i+1) + "° diretor: ");
+            String nome = teclado.nextLine();
+            boolean valid = false;
+            String input = "";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            while (!valid){
+                System.out.print("Data de nascimento (dd/MM/yyyy): ");
+                input = teclado.nextLine();
+                if (input.matches("\\d{2}/\\d{2}/\\d{4}")){
+                    try{
+                        LocalDate date = LocalDate.parse(input,formatter);
+                        valid = true;
+                        diretores.add(new Diretor(nome, input));
+                    } catch (DateTimeParseException e){
+                        System.out.println("Erro: Data inválida. Por favor, digite uma data válida.");
+                    }
+                } else{
+                    System.out.println("Erro: Formato invalido. Por favor, use o formato DD/MM/AA.");
+                }
+            }
+            
+            
+            System.out.println("\nDiretor cadastrado com sucesso: " + nome + " - (" + input + ")\n");
+        }
         App.menuAdministrador();
     }
 
